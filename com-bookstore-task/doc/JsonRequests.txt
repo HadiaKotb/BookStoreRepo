@@ -1,0 +1,36 @@
+sample of json requests:
+ 
+localhost:8081/addCutomer:
+		{
+			"customerRole": "ADMIN",
+			"firstName": "Hany",
+		   "lastName":"Mohamed"
+		   
+		}
+
+localhost:8081/adminaddbook/{customerId}:
+
+		[
+            {
+            "bookName": "Love",
+            "bookCategory":"Hope",
+            "bookAuthor" :"HAdia",
+            "bookDetails" : "gives a summary of how to deal with people"
+         },
+         {
+            "bookName": "Goodness",
+            "bookCategory":"Love",
+            "bookAuthor" :"Hany",
+            "bookDetails" : "gives a summary of how to deal with people"
+         }
+        ]
+localhost:8081/borrowbook
+
+		{
+			"customerId": 1,
+			"bookId": 1,
+			"borrowDate":"2023-09-15T18:16:23.501Z",
+			"returnDate":"2023-09-20T18:16:23.501Z"
+		   
+			
+		}

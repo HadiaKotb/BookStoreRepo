@@ -1,0 +1,498 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "OpenAPI definition",
+		"version": "v0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8081",
+			"description": "Generated server url"
+		}
+	],
+	"paths": {
+		"/borrowbook": {
+			"post": {
+				"tags": [
+					"borrow-request-controller"
+				],
+				"operationId": "requestBorrowingABook",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/BorrowBookRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/BorrowBook"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/adminaddbook/{customerId}": {
+			"post": {
+				"tags": [
+					"book-controller"
+				],
+				"operationId": "addBookForAdmin",
+				"parameters": [
+					{
+						"name": "customerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "array",
+								"items": {
+									"$ref": "#/components/schemas/BookRequest"
+								}
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Book"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/addCutomer": {
+			"post": {
+				"tags": [
+					"customer-controller"
+				],
+				"operationId": "addCustomer",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CustomerRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/Customer"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/adminupdatebook/{customerId}/{bookId}/{bookAvailabilityStatus}/{returnDate}": {
+			"patch": {
+				"tags": [
+					"borrow-request-controller"
+				],
+				"operationId": "updateBookAvialabiltyForAdmin",
+				"parameters": [
+					{
+						"name": "customerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					{
+						"name": "bookId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					{
+						"name": "bookAvailabilityStatus",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "string",
+								"format": "date-time"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"$ref": "#/components/schemas/BorrowBook"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/viewborrowinghistory/{id}": {
+			"get": {
+				"tags": [
+					"customer-controller"
+				],
+				"operationId": "viewBorrowingHistoryForCustomer",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/BorrowHistoryResponse"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/browsebook": {
+			"get": {
+				"tags": [
+					"book-controller"
+				],
+				"operationId": "browseBooksByCategory",
+				"parameters": [
+					{
+						"name": "bookName",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "bookCategory",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "bookAuthor",
+						"in": "query",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Book"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/bookdetails/{id}": {
+			"get": {
+				"tags": [
+					"book-controller"
+				],
+				"operationId": "viewBookDetails",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"*/*": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admindeletebook/{customerId}/{bookId}": {
+			"delete": {
+				"tags": [
+					"book-controller"
+				],
+				"operationId": "deleteBookForAdmin",
+				"parameters": [
+					{
+						"name": "customerId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					{
+						"name": "bookId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"BorrowBookRequest": {
+				"type": "object",
+				"properties": {
+					"customerId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"bookId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"borrowDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"returnDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				}
+			},
+			"Book": {
+				"type": "object",
+				"properties": {
+					"bookId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"bookName": {
+						"type": "string"
+					},
+					"bookCategory": {
+						"type": "string"
+					},
+					"bookAuthor": {
+						"type": "string"
+					},
+					"bookDetails": {
+						"type": "string"
+					}
+				}
+			},
+			"BorrowBook": {
+				"type": "object",
+				"properties": {
+					"borrowId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"customer": {
+						"$ref": "#/components/schemas/Customer"
+					},
+					"book": {
+						"$ref": "#/components/schemas/Book"
+					},
+					"borrowDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"returnDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"bookAvialabilty": {
+						"type": "string",
+						"enum": [
+							"AVAILABLE",
+							"PENDING",
+							"APPROVED",
+							"REJECTED",
+							"RETURNED"
+						]
+					}
+				}
+			},
+			"Customer": {
+				"type": "object",
+				"properties": {
+					"customerId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"customerRole": {
+						"type": "string",
+						"enum": [
+							"USER",
+							"ADMIN"
+						]
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					}
+				}
+			},
+			"BookRequest": {
+				"type": "object",
+				"properties": {
+					"bookName": {
+						"type": "string"
+					},
+					"bookAuthor": {
+						"type": "string"
+					},
+					"bookDetails": {
+						"type": "string"
+					},
+					"bookCategory": {
+						"type": "string"
+					}
+				}
+			},
+			"CustomerRequest": {
+				"type": "object",
+				"properties": {
+					"customerRole": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					}
+				}
+			},
+			"BorrowHistoryResponse": {
+				"type": "object",
+				"properties": {
+					"bookId": {
+						"type": "integer",
+						"format": "int32"
+					},
+					"bookName": {
+						"type": "string"
+					},
+					"bookCategory": {
+						"type": "string"
+					},
+					"bookAuthor": {
+						"type": "string"
+					},
+					"bookDetails": {
+						"type": "string"
+					},
+					"borrowDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"returnDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"bookAvialabilty": {
+						"type": "string",
+						"enum": [
+							"AVAILABLE",
+							"PENDING",
+							"APPROVED",
+							"REJECTED",
+							"RETURNED"
+						]
+					}
+				}
+			}
+		}
+	}
+}
